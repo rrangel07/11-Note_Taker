@@ -10,11 +10,11 @@ notes.get('/', (req,res) => {
 notes.post('/', (req,res) => {
     console.info(`${req.method} request received for notes`);
     console.log(req.body)
-    const { tittle, text } = req.body;
-    console.log(tittle,text);
+    const { title, text } = req.body;
+    console.log(title,text);
     if(req.body) {
         const newNote = {
-            tittle,
+            title,
             text,
             id: uuid(),
         }

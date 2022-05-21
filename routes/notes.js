@@ -9,7 +9,28 @@ notes.get('/', (req,res) => {
 
 notes.post('/', (req,res) => {
     console.info(`${req.method} request received for notes`);
-    read
+    const { tittle, text } = req.body;
+    if(req.body) {
+        const newNote = {
+            tittle,
+            text,
+            id: uuid(),
+        }
+        readAndAppend (newNote, '../db/db.json');
+        res.json(`Note added to database 🚀`);
+    } else {
+        res.error(`Error saving the note`);
+    }
+});
+
+notes.delete('/:id', (req,res) => {
+    // console.info(`${req.method} request received for notes`);
+
+    // readFromFile('../db/db.json').then((data) => res.json(JSON.parse(data)));
+    //     res.json(`Note added to database 🚀`);
+    // } else {
+    //     res.error(`Error adding the `)
+    // }
 });
 
 module.exports = notes;

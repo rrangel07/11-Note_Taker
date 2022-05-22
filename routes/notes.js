@@ -25,16 +25,28 @@ notes.post('/', (req,res) => {
     }
 });
 
-// notes.delete('/:id', (req,res) => {
-//     console.info(`${req.method} request received for notes`);
+notes.delete('/:id', (req,res) => {
+    let exists = false;
+    let pos;
+    console.info(`${req.method} request received for notes`);
 
-//     readFromFile('../db/db.json').then((data) => {
-//         const notesArray = (JSON.parse(data)).filter(each => each.id != req.params.id)
-//     });
-//     //     res.json(`Note added to database 🚀`);
-//     // } else {
-//     //     res.error(`Error adding the `)
-//     // }
-// });
+    readFromFile('./db/db.json').then((data) => {
+        const notesArray = JSON.parse(data);
+        notesArray.forEach((ele,index) => {
+            if (ele.id === req.params.id){
+                exists = true;
+                pos= index;
+            }
+        });
+        if (exists) {
+            notesArray.splice(pos,1);
+            res.json('Note deleted')
+        } else {
+            res.json('Note not found')
+        }
+    });
+
+
+});
 
 module.exports = notes;

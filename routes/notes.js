@@ -1,5 +1,5 @@
 const notes = require('express').Router();
-const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
+const { readFromFile, writeToFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 
 notes.get('/', (req,res) => {
@@ -38,8 +38,10 @@ notes.delete('/:id', (req,res) => {
                 pos= index;
             }
         });
+        console.log(pos);
         if (exists) {
             notesArray.splice(pos,1);
+            writeToFile('./db/db.json', notesArray);
             res.json('Note deleted')
         } else {
             res.json('Note not found')
